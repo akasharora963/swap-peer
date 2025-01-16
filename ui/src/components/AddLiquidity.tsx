@@ -1,10 +1,26 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
+import { useLP } from "@/hooks/useLP";
 
 const AddLiquidity = () => {
   const [amountA, setAmountA] = useState<string>("");
   const [amountB, setAmountB] = useState<string>("");
+
+  const { getReserves } = useLP();
+
+  useEffect(() => { 
+   async function fetchReserves(){
+
+    const {formatedReserveA,formatedReserveB} = await getReserves();
+
+    console.log("---->",formatedReserveA,formatedReserveB)
+
+   }
+
+   fetchReserves()
+
+  },[])
 
 //   const addLiquidity = async () => {
 //     if (!provider || !account) return;

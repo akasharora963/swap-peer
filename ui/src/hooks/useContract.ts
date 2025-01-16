@@ -5,6 +5,7 @@ import { useEthersProvider } from './useEthersProvider';
 import { AddressZero } from '@ethersproject/constants';
 import { isAddress, getProvider } from '@/utils';
 import { Address } from 'viem';
+import { LPContract } from '@/types/LP';
 
 
 export function useContract(
@@ -12,6 +13,7 @@ export function useContract(
   ABI: ContractInterface
 ):
   | Contract
+  | LPContract
   | undefined {
   const { chainId, address: userAddress } = useAccount();
   const provider = useEthersProvider({ chainId });
