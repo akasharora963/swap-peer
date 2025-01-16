@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.28;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {ERC20Permit} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
@@ -17,7 +17,7 @@ contract LiquidityToken is ERC20, ERC20Permit {
     /// @param symbol The symbol of the liquidity token
     constructor(string memory name, string memory symbol)
         ERC20(name, symbol)
-        ERC20Permit(name) // Initialize ERC20Permit with the token's name
+        ERC20Permit(name) 
     {}
 
     /// @notice Sets the liquidity pool address (callable once)
