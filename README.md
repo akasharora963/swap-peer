@@ -33,7 +33,7 @@ The Liquidity Pool consists of the following components:
 - `ReentrancyGuard`: Prevents reentrancy attacks.
 - `SafeERC20`: Ensures secure token transfer operations.
 
-### 2. Deployment and Testing
+### 2. Deployment and Testing (Blast Sepolia Network)
 
 #### Deployed Addresses
 - PEER TOKEN : 0x8c96F45dC30F01d74Be48729783a7811325dA4c1
