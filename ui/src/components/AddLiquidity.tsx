@@ -15,23 +15,18 @@ const AddLiquidity = () => {
 
   useEffect(() => {
     async function fetchReserves() {
-
       const { formatedReserveA, formatedReserveB } = await getReserves();
-
       setReserves({
         resereveA: formatedReserveA,
         reserveB: formatedReserveB
       })
-
-
     }
-
     fetchReserves()
 
-  }, [])
+  }, [getReserves])
 
   const addLiquidityToLp = async () => {
-    const tx = await addLiquidity(ethers.parseUnits(amountA, 18), ethers.parseUnits(amountB, 18));
+    await addLiquidity(ethers.parseUnits(amountA, 18), ethers.parseUnits(amountB, 18));
     alert("Liquidity Added Successfully!");
     window.location.reload()
   };

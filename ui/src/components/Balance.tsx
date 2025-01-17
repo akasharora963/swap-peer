@@ -1,6 +1,6 @@
 "use client"
 import { ERC20_TEST_TOKEN_LIST } from "@/constants/token";
-import React, { useState } from "react";
+import React from "react";
 import { useAccount, useBalance } from "wagmi";
 
 

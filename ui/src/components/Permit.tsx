@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
-import { getProvider } from "@/utils";
 import { testErc20Abi } from "@/constants/abi/erc20";
-import { ERC20_TEST_TOKEN_LIST, LP, TokenInfo } from "@/constants/token";
+import { ERC20_TEST_TOKEN_LIST, LP } from "@/constants/token";
 import { useAccount } from "@/hooks/useAccount";
 import { useEthersProvider } from "@/hooks/useEthersProvider";
 
@@ -70,8 +69,7 @@ const PermitComponent = () => {
 
         // Step 4: Call permit on the contract
         try {
-            const tx = await tokenContract.permit(owner, LP, value, deadlineTimestamp, v, r, s);
-            // await tx.wait()
+            await tokenContract.permit(owner, LP, value, deadlineTimestamp, v, r, s);
             alert("Permit successful!");
         } catch (error) {
             console.error(error);

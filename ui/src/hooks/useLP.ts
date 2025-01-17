@@ -7,7 +7,6 @@ import { lpAbi } from '@/constants/abi/pool';
 import { ethers } from 'ethers';
 
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 export function useLP() {
     const lp = useContract(
         LP as Address,

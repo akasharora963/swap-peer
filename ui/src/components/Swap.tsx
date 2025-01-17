@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from "react";
 import { ethers } from "ethers";
-import { ERC20_TEST_TOKEN_LIST, TokenInfo } from "@/constants/token";
+import { ERC20_TEST_TOKEN_LIST } from "@/constants/token";
 import { useLP } from "@/hooks/useLP";
 
 const Swap = () => {

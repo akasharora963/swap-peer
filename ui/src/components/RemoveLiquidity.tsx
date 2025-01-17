@@ -24,7 +24,7 @@ const RemoveLiquidity = () => {
 
     const liquidityAmount = (percentage * Number(lpt.data?.formatted)) / 100
 
-    const tx = await removeLiquidity(ethers.parseUnits(liquidityAmount.toString(), 18));
+    await removeLiquidity(ethers.parseUnits(liquidityAmount.toString(), 18));
     alert("Liquidity Removed Successfully!");
     window.location.reload()
   };

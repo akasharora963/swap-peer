@@ -3,13 +3,9 @@ import WalletConnect from "@/components/WalletConnect";
 import AddLiquidity from "@/components/AddLiquidity";
 import RemoveLiquidity from "@/components/RemoveLiquidity";
 import Swap from "@/components/Swap";
-import { useState } from "react";
-import { ethers } from "ethers";
 import Web3Provider from "@/web3Provider";
-import { envConfig } from "@/config";
 import Balance from "@/components/Balance";
 import PermitComponent from "@/components/Permit";
-import { ERC20_TEST_TOKEN_LIST } from "@/constants/token";
 
 const App: React.FC = () => {
 
