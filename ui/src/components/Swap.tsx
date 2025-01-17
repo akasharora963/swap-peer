@@ -1,21 +1,20 @@
 "use client"
 import React, { useState } from "react";
 import { ethers } from "ethers";
+import { ERC20_TEST_TOKEN_LIST, TokenInfo } from "@/constants/token";
+import { useLP } from "@/hooks/useLP";
 
 const Swap = () => {
   const [inputAmount, setInputAmount] = useState<string>("");
   const [inputToken, setInputToken] = useState<string>("Token A");
-  const [outputToken, setOutputToken] = useState<string>("Token B");
 
-//   const swapTokens = async () => {
-//     if (!provider || !account) return;
+  const { swap } = useLP()
 
-//     const contract = new ethers.Contract("LiquidityPoolAddress", ["swap"], provider.getSigner());
-
-//     const tx = await contract.swap(ethers.utils.parseUnits(inputAmount, 18), inputToken === "Token A" ? "Token A" : "Token B");
-//     await tx.wait();
-//     alert("Swap Successful!");
-//   };
+  const swapTokens = async () => {
+    await swap(ethers.parseUnits(inputAmount, 18), inputToken === "Token A" ? ERC20_TEST_TOKEN_LIST[0].address : ERC20_TEST_TOKEN_LIST[1].address);
+    alert("Swap Successful!");
+    window.location.reload()
+  };
 
   return (
     <div className="space-y-4 p-4">
@@ -31,12 +30,12 @@ const Swap = () => {
       </div>
       <div>
         <select value={inputToken} onChange={(e) => setInputToken(e.target.value)} className="p-2 rounded bg-gray-700 text-white">
-          <option value="Token A">Token A</option>
-          <option value="Token B">Token B</option>
+          <option value="Token A">Peer</option>
+          <option value="Token B">Play</option>
         </select>
       </div>
-     
-      <button onClick={() => alert('swap')} className="bg-yellow-500 text-white p-3 rounded-lg hover:bg-yellow-600">
+
+      <button onClick={swapTokens} className="bg-yellow-500 text-white p-3 rounded-lg hover:bg-yellow-600">
         Swap
       </button>
     </div>

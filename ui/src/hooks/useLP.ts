@@ -32,6 +32,39 @@ export function useLP() {
         [lp]
     );
 
+    const removeLiquidity = useCallback(
+        async (liquidityAmount: bigint) => {
+            if (!lp) return;
+
+            const gasEstimate = await lp.estimateGas.removeLiquidity(
+                liquidityAmount
+            );
+            const tx = await lp.removeLiquidity(liquidityAmount, {
+                gasLimit: gasEstimate.toBigInt(),
+            });
+            await tx.wait();
+            return tx;
+        },
+        [lp]
+    );
+
+    const swap = useCallback(
+        async (inputAmount: bigint, inputToken: Address) => {
+            if (!lp) return;
+
+            const gasEstimate = await lp.estimateGas.swap(
+                inputAmount,
+                inputToken
+            );
+            const tx = await lp.swap(inputAmount, inputToken, {
+                gasLimit: gasEstimate.toBigInt(),
+            });
+            await tx.wait();
+            return tx;
+        },
+        [lp]
+    );
+
     const getReserves = useCallback(
         async (): Promise<{
             formatedReserveA: string,
@@ -60,7 +93,7 @@ export function useLP() {
 
                 return {
                     formatedReserveA,
-                    formatedReserveB 
+                    formatedReserveB
                 };
             } catch (error) {
                 console.error('Error fetching:', error);
@@ -70,8 +103,10 @@ export function useLP() {
         [lp]
     );
 
-   return {
-    addLiquidity,
-    getReserves
-   }
+    return {
+        addLiquidity,
+        removeLiquidity,
+        swap,
+        getReserves
+    }
 }

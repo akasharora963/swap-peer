@@ -1,6 +1,6 @@
 import { Address } from 'viem';
 
-interface TokenInfo {
+export interface TokenInfo {
   readonly chainId: number;
   readonly address: Address;
   readonly name: string;
@@ -31,3 +31,5 @@ export const ERC20_TEST_TOKEN_LIST: TokenInfo[] = [
 ]
 
 export const LP = "0xC7c8642F16077227bC241B809A6A93eFF67a428B"
+
+export const LPT = "0xb788cc8162cf064580685964c926ef49b74044ba"
