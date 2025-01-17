@@ -35,6 +35,7 @@ const RemoveLiquidity = () => {
     <div className="space-y-4 p-4">
       <h2 className="text-2xl text-white">Remove Liquidity</h2>
       <div className="p-6 max-w-md mx-auto space-y-4">
+        <h1 className="text-lg font-semibold text-white-800">Current LPT : {lpt.data?.formatted}</h1>
         <h2 className="text-lg font-semibold text-white-800">Select Percentage</h2>
         <div className="flex items-center space-x-4">
           <input

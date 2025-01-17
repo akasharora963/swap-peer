@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { ethers } from "ethers";
 import { getProvider } from "@/utils";
 import { testErc20Abi } from "@/constants/abi/erc20";
-import { LP, TokenInfo } from "@/constants/token";
+import { ERC20_TEST_TOKEN_LIST, LP, TokenInfo } from "@/constants/token";
 import { useAccount } from "@/hooks/useAccount";
 import { useEthersProvider } from "@/hooks/useEthersProvider";
 
-const PermitComponent = ({ token}: { token: TokenInfo }) => {
+const PermitComponent = () => {
     const [amount, setAmount] = useState("");
     const [deadline, setDeadline] = useState("");
+    const [inputToken, setInputToken] = useState("Token A");
+
 
     const { chainId, address: userAddress } = useAccount();
 
@@ -23,9 +25,11 @@ const PermitComponent = ({ token}: { token: TokenInfo }) => {
             return;
         }
 
+        const token = inputToken === "Token A" ? ERC20_TEST_TOKEN_LIST[0] : ERC20_TEST_TOKEN_LIST[1]
+
         const owner = userAddress;
 
-        const tokenContract =  new ethers.Contract(token.address, testErc20Abi, signer as unknown as ethers.ContractRunner);
+        const tokenContract = new ethers.Contract(token.address, testErc20Abi, signer as unknown as ethers.ContractRunner);
 
         // Step 1: Get nonce and DOMAIN_SEPARATOR
         const nonce = await tokenContract.nonces(owner);
@@ -95,6 +99,13 @@ const PermitComponent = ({ token}: { token: TokenInfo }) => {
                     placeholder="Deadline (in sec)"
                     className="p-2 rounded bg-gray-700 text-white"
                 />
+            </div>
+            <div>
+                <h3>Select Token :</h3>
+                <select value={inputToken} onChange={(e) => setInputToken(e.target.value)} className="p-2 rounded bg-gray-700 text-white">
+                    <option value="Token A">Peer</option>
+                    <option value="Token B">Play</option>
+                </select>
             </div>
             <button onClick={handlePermit} className="bg-cyan-500 text-white p-3 rounded-lg hover:bg-cyan-600">Permit</button>
         </div>

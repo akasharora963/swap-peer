@@ -29,6 +29,7 @@ const Swap = () => {
         />
       </div>
       <div>
+        <h3>Select Token :</h3>
         <select value={inputToken} onChange={(e) => setInputToken(e.target.value)} className="p-2 rounded bg-gray-700 text-white">
           <option value="Token A">Peer</option>
           <option value="Token B">Play</option>

@@ -6,21 +6,29 @@ import { useLP } from "@/hooks/useLP";
 const AddLiquidity = () => {
   const [amountA, setAmountA] = useState<string>("");
   const [amountB, setAmountB] = useState<string>("");
+  const [reserves, setReserves] = useState({
+    resereveA: '',
+    reserveB: ''
+  })
 
   const { getReserves, addLiquidity } = useLP();
 
-  // useEffect(() => { 
-  //  async function fetchReserves(){
+  useEffect(() => {
+    async function fetchReserves() {
 
-  //   const {formatedReserveA,formatedReserveB} = await getReserves();
+      const { formatedReserveA, formatedReserveB } = await getReserves();
 
-  //   console.log("---->",formatedReserveA,formatedReserveB)
+      setReserves({
+        resereveA: formatedReserveA,
+        reserveB: formatedReserveB
+      })
 
-  //  }
 
-  //  fetchReserves()
+    }
 
-  // },[])
+    fetchReserves()
+
+  }, [])
 
   const addLiquidityToLp = async () => {
     const tx = await addLiquidity(ethers.parseUnits(amountA, 18), ethers.parseUnits(amountB, 18));
@@ -30,6 +38,9 @@ const AddLiquidity = () => {
 
   return (
     <div className="space-y-4 p-4">
+      <h1 className="text-xl">Current Liquidity</h1>
+      <h3>ReserveA: {reserves.resereveA}</h3>
+      <h3>ReserveB: {reserves.reserveB}</h3>
       <h2 className="text-2xl text-white">Add Liquidity</h2>
       <div>
         <input
