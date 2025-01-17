@@ -4,11 +4,15 @@ import { testErc20Abi } from "@/constants/abi/erc20";
 import { ERC20_TEST_TOKEN_LIST, LP } from "@/constants/token";
 import { useAccount } from "@/hooks/useAccount";
 import { useEthersProvider } from "@/hooks/useEthersProvider";
+import Loader from "./Loader";
+import { toast } from "react-toastify";
 
 const PermitComponent = () => {
     const [amount, setAmount] = useState("");
     const [deadline, setDeadline] = useState("");
     const [inputToken, setInputToken] = useState("Token A");
+    const [loading, setLoading] = useState(false)
+
 
 
     const { chainId, address: userAddress } = useAccount();
@@ -16,6 +20,9 @@ const PermitComponent = () => {
     const provider = useEthersProvider({ chainId })
 
     const handlePermit = async () => {
+        if(!userAddress || !amount || !deadline) return;
+
+        setLoading(true)
 
         const signer = provider?.getSigner(userAddress);
 
@@ -70,7 +77,21 @@ const PermitComponent = () => {
         // Step 4: Call permit on the contract
         try {
             await tokenContract.permit(owner, LP, value, deadlineTimestamp, v, r, s);
-            alert("Permit successful!");
+
+            toast.success("Permit Granted Successfully", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
+
+            setLoading(false)
+            setTimeout(() => window.location.reload(), 4000)
+
+
         } catch (error) {
             console.error(error);
             alert("Error during permit");
@@ -86,7 +107,7 @@ const PermitComponent = () => {
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     placeholder="Token Amount"
-                    className="p-2 rounded bg-gray-700 text-white"
+                    className="p-2 rounded bg-gray-700 text-white border-2  border-white "
                 />
             </div>
             <div>
@@ -95,7 +116,7 @@ const PermitComponent = () => {
                     value={deadline}
                     onChange={(e) => setDeadline(e.target.value)}
                     placeholder="Deadline (in sec)"
-                    className="p-2 rounded bg-gray-700 text-white"
+                    className="p-2 rounded bg-gray-700 text-white border-2  border-white"
                 />
             </div>
             <div>
@@ -105,7 +126,9 @@ const PermitComponent = () => {
                     <option value="Token B">Play</option>
                 </select>
             </div>
-            <button onClick={handlePermit} className="bg-cyan-500 text-white p-3 rounded-lg hover:bg-cyan-600">Permit</button>
+            <button onClick={handlePermit} className="bg-cyan-500 text-white p-3 rounded-lg hover:bg-cyan-600">
+                {loading ? <Loader /> : "Permit"}
+            </button>
         </div>
     );
 };

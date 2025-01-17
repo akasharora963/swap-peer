@@ -5,9 +5,13 @@ import { useAccount } from "@/hooks/useAccount";
 import { useBalance } from "wagmi";
 import { LPT } from "@/constants/token";
 import { useLP } from "@/hooks/useLP";
+import Loader from "./Loader";
+import { toast } from "react-toastify";
 
 const RemoveLiquidity = () => {
   const [percentage, setPercentage] = useState(0);
+  const [loading, setLoading] = useState(false)
+
 
   const { address } = useAccount()
 
@@ -19,14 +23,25 @@ const RemoveLiquidity = () => {
   })
 
   const removeLiquidityLp = async () => {
-
-    if (Number(lpt.data?.formatted) === 0 || percentage === 0) return;
-
+    if (!address || Number(lpt.data?.formatted) === 0 || percentage === 0) return;
+    setLoading(true)
     const liquidityAmount = (percentage * Number(lpt.data?.formatted)) / 100
 
     await removeLiquidity(ethers.parseUnits(liquidityAmount.toString(), 18));
-    alert("Liquidity Removed Successfully!");
-    window.location.reload()
+
+    toast.success("Liquidity Removed Successfully", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
+    setLoading(false)
+    setTimeout(() => window.location.reload(), 4000)
+
+
   };
 
 
@@ -49,7 +64,7 @@ const RemoveLiquidity = () => {
           <span className="text-sm font-medium text-white-700">{percentage}%</span>
         </div>
         <button onClick={removeLiquidityLp} className="bg-red-500 text-white p-3 rounded-lg hover:bg-red-600">
-          Remove Liquidity
+          {loading ? <Loader /> : "Remove Liquidity"}
         </button>
       </div>
     </div>
